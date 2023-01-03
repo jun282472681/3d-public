@@ -1,0 +1,30 @@
+.flex {
+  display: flex;
+}
+
+// 垂直倒序 居中 居中
+.RYcenterXcenter {
+	flex-direction: column-reverse;
+	justify-content: center;
+	align-items: center;
+}
+
+// 垂直 居中 居中
+.YcenterXcenter {
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+// 垂直 between 居中
+.YspaceBXcenter {
+	flex-direction: column;
+	justify-content: space-between;
+	align-items: center;
+}
+
+// between 居中
+.XspaceBYcenter {
+	justify-content: space-between;
+	align-items: center;
+}
