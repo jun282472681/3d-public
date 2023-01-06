@@ -39,7 +39,7 @@ var radius = 100,
 
 
 var intersectsObjs = [];
-
+var moreVisual = [],moreVisualInfo = []
 let glbArray = [
   'SM_diwangge',
   'LXWZ_2-4F',
@@ -871,12 +871,14 @@ export function animateA2KyjAndZdj() {
       window.ThreeDesign.selectRoom('空调房', true, 'kt');
     }
   }
+  showMoreCamera()
 }
 
 function onWindowResize() {
   camera.aspect = window.innerWidth / window.innerHeight;
   camera.updateProjectionMatrix();
   renderer.setSize(window.innerWidth, window.innerHeight);
+  moreCameraResize()
 }
 
 function onDocumentMouseMove(event) {
@@ -956,6 +958,27 @@ export function startKeyBoard() {
 // 开启路径绘制
 export function startRoam() {
   route.drawPath();
+}
+
+export function getCameraInfo(){
+  let look = new THREE.Vector3()
+  camera.getWorldDirection(look);
+  return {
+    postion: [camera.position.x,camera.position.y,camera.position.z],
+    look: [(look.x + camera.position.x),(look.y + camera.position.y),(look.z + camera.position.z)]
+  }
+}
+
+//多视角镜头
+export function showMoreVisual(info) {
+  moreVisual = []
+  moreVisualInfo = JSON.parse(JSON.stringify(info))
+  moreVisualInfo.forEach(item => {
+    let camera = new THREE.PerspectiveCamera(45,item.width / item.height,1,30000)
+    camera.position.set(...item.cameraPos)
+    camera.lookAt(...item.cameraLook)
+    moreVisual.push(camera)
+  })
 }
 
 function initControls() {
@@ -1111,5 +1134,30 @@ function createLightRoad(pointsArray) {
 }
 
 function render() {
+  renderer.setViewport(0,0,window.innerWidth, window.innerHeight)
   renderer.render(scene, camera);
+}
+
+//设置多视角镜头
+function showMoreCamera() {
+  renderer.clearDepth();
+  renderer.setScissorTest( true );
+  moreVisual.forEach((camera,index) => {
+    const info = moreVisualInfo[index]
+    const left = window.innerWidth - info.width - info.right
+    const bottom = info.bottom
+    renderer.setScissor(left,bottom,info.width,info.height);
+    renderer.setViewport(left,bottom,info.width,info.height)
+    renderer.render(scene, camera)
+  })
+  renderer.setScissorTest( false );
+}
+
+//多视角resize
+function moreCameraResize() {
+  moreVisual.forEach((moreCamer,index) => {
+    const info = moreVisualInfo[index]
+    moreCamer.aspect = info.width / info.height
+    moreCamer.updateProjectionMatrix();
+  })
 }

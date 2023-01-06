@@ -1,6 +1,7 @@
 <template>
   <div class="home flex XspaceBYcenter">
-    <roam-drawer :drawerVisible.sync="drawerVisible" @updateDrawerVisible="updateDrawerVisible"></roam-drawer>
+    <visualDrawer :drawerVisible.sync='visualVisable'/>
+    <roam-drawer :drawerVisible.sync="drawerVisible"></roam-drawer>
     <home-panel v-if="homePanelVisible" ></home-panel>
     <warehouse-panel v-if="warehousePanelVisible"></warehouse-panel>
     <warehouse-data v-if="warehousePanelVisible"></warehouse-data>
@@ -14,6 +15,7 @@ import { mapState } from "vuex"
 import buildSelect from '@/components/buildSelect.vue';
 import roamSelect from '@/components/roam/roamSelect.vue';
 import roamDrawer from '@/components/roam/roamDrawer.vue';
+import visualDrawer from '@/components/visualRoam/visualDrawer.vue';
 import homePanel from '@/components/panel/homePanel.vue';
 import warehousePanel from '@/components/panel/warehousePanel.vue';
 import warehouseData from '@/components/panel/warehouseData.vue';
@@ -29,7 +31,8 @@ export default {
     warehousePanel,
     warehouseData,
     storagePanel,
-    boxInfoPanel
+    boxInfoPanel,
+    visualDrawer
   },
   mounted() {
     if (typeof window.scene == 'undefined') {
@@ -202,7 +205,7 @@ export default {
     }
   },
   computed: {
-    ...mapState("app", ["drawerVisible", "homePanelVisible", "warehousePanelVisible", "storageVisible"]),
+    ...mapState("app", ["drawerVisible", 'visualVisable', "homePanelVisible", "warehousePanelVisible", "storageVisible"]),
   },
   methods: {
     // 选择房间
@@ -233,9 +236,6 @@ export default {
         });
       }
     },
-    updateDrawerVisible(value) {
-      this.drawerVisible = value;
-    }
   },
   watch: {
     '$store.state.app.selectedBuildIndex': {

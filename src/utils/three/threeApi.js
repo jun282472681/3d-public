@@ -18,7 +18,9 @@ import {
   end,
   clearRoam,
   startGroupRoute,
-  saveRout
+  saveRout,
+  getCameraInfo,
+  showMoreVisual
 } from './A2KyjAndZdj';
 import { rotationAngle } from '../index.js';
 import initSndHouse from './SndHouse';
@@ -413,5 +415,15 @@ export function ThreeDesign() {
         item.kyjAndZdjLoaded = false;
       }
     });
+  }
+
+  //得到当前镜头信息
+  this.getCameraInfo = () => {
+    return getCameraInfo()
+  }
+
+  //保存多镜头信息并显示
+  this.saveMoreCameraInfo = (info) => {
+    showMoreVisual(info)
   }
 }

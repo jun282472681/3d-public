@@ -266,7 +266,6 @@ export default {
       window.ThreeDesign.roamClick('end');
     },
     cancelDrawer() {
-      // this.$emit('updateDrawerVisible', false)
       this.$store.commit('app/setState', { drawerVisible: false });
     },
     addRoute() {

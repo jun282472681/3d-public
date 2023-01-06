@@ -27,6 +27,7 @@ const state = {
   // 选中的漫游
   selectedRoamIndex: 0,
   drawerVisible: false,
+  visualVisable: false,
   homePanelVisible: true,
   warehousePanelVisible: false,
   storageVisible: false,
@@ -36,8 +37,17 @@ const state = {
 };
 
 const mutations = {
+  setVisual(state, data) {
+    if (data != undefined && data.visualVisable != undefined)
+      state.visualVisable = data.visualVisable
+    else
+      state.visualVisable = !state.visualVisable
+  },
   setState(state, data) {
-    state.drawerVisible = data.drawerVisible
+    if (data != undefined && data.drawerVisible != undefined)
+      state.drawerVisible = data.drawerVisible
+    else
+      state.drawerVisible = !state.drawerVisible
   },
   selectingBuild(state, index) {
     state.selectedBuildIndex = index;

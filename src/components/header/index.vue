@@ -39,8 +39,8 @@
             </el-tooltip>
           </div>
           <searchSelect v-else /> -->
-          <div class="coverage icon">
-            <el-tooltip class="item" effect="dark" content="后台管理" placement="bottom-end">
+          <div class="coverage icon" @click="visualAngle">
+            <el-tooltip class="item" effect="dark" content="多视角" placement="bottom-end">
               <img style="width: 100%; height: 100%" src="@/assets/images/header/ic_tuceng@2x.png" alt=""/>
             </el-tooltip>
           </div>
@@ -141,9 +141,13 @@ export default {
         window.ThreeDesign?.cruiseScene("pause");
       }
     },
+    //多视角
+    visualAngle() {
+      this.$store.commit('app/setVisual');
+    },
     // 巡游
     xunyou () {
-      this.$store.commit('app/setState', { drawerVisible: true });
+      this.$store.commit('app/setState');
     },
     clickHC() {
       this.selectedMenu = 'kf';
